@@ -1,4 +1,4 @@
-let listaLivros = []
+
 let livrosDisponiveis = []
 let livrosIndisponiveis = []
 let listaDeUsuarios = [1,2 ,3 ,4, 5]
