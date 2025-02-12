@@ -63,7 +63,7 @@ function cadastrarEmprestimos(){
         emprestimosEmAndamento = JSON.parse(localStorage.getItem("historicoEmprestimos")) || []
         emprestimosEmAndamento.push(emprestimo)
         emprestimosEmAndamento.sort((a, b) => a.nome.localeCompare(b.nome))
-        localStorage.setItem("historicoEmprestimos", JSON.stringify(emprestimosEmAndamento))
+        localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))
 
         let tituloLivro = document.getElementById("tituloLivro").value
         let dataEmprestimo = document.getElementById("dataEmprestimo").value
