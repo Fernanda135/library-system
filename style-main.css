@@ -1,5 +1,5 @@
 body {
-    background-image: url('./img/fundo.jpg');
+    background-image: url('./img/BACKGROUND\ MENU.jpg');
     background-size: cover;
 }
 
@@ -15,20 +15,21 @@ nav {
     text-align: center;
 }
 
-.nav-links {
+.navegacao {
     display: flex;
     justify-content: center;
     gap: 2rem;
     list-style-type: none;
 }
 
-.nav-links a {
+.navegacao a {
     color: white;
     font-weight: bold;
     text-decoration: none;
 }
 
-.hero {
+
+.logo {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -53,24 +54,29 @@ h1 {
     width: 100%;
 }
 
-.search-wrapper {
+.search-bar {
     flex: 1;
 }
 
 .search-input {
-    width: 100%;
+    width: 114%;
     padding: 1rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 105px;
     background: white;
 }
 
 .filter-btn {
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     color: rgb(255, 255, 255);
-    border: none;
-    border-radius: 5px;
+    border-radius: 100px;
     cursor: pointer;
-    background-color: rgb(34, 34, 40);
+    background-color: rgb(34, 34, 35);
     font-weight: bold;
+    width: 105px;
+}
+
+button {
+    background-color: transparent;
+    border: none;
 }

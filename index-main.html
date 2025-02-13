@@ -4,27 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Library</title>
+    <script>"script.js"</script>
     <link rel="stylesheet" href="style-main.css">
 </head>
 <body>
     <header>
         <nav>
-            <ul class="nav-links">
-                <li><a href="#">USUÁRIOS</a></li>
-                <li><a href="#">LIVROS</a></li>
-                <li><a href="#">LOCAR</a></li>
+            <ul class="navegacao">
+                <button><a href="gerUser.html">USUÁRIOS</a></button>
+                <button><a href="gerLivro.html">LIVROS</a></button>
+                <button><a href="gerLocar.html">LOCAR</a></button>
             </ul>
         </nav>
     </header>
 
     <main>
-        <div class="hero">
+        <div class="logo">
             <h1>System<br>LIBRARY</h1>
             <div class="search-container">
-                <div class="search-wrapper">
+                <div class="search-bar">
                     <input type="text" placeholder="PESQUISAR" class="search-input">
                 </div>
-                <button class="filter-btn">FILTRO</button>
+                <select id="filtro" class="filter-btn">
+                    <option value="livro">Livro</option>
+                    <option value="usuario">Usuário</option>
+                </select>
             </div>
         </div>
     </main>
