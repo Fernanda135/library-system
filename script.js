@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+// LISTAS
+
+
 let listaLivros = []
 let listaDeUsuarios = []
 let livrosDisponiveis = []
@@ -9,6 +14,7 @@ let emprestimosEmDebito = []
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 // JSON.parse
+
 
 window.onload = function() { // função que ocorre na hora que recarrega o site, ela vai estar armazenando cada array
     listaLivros = JSON.parse(localStorage.getItem("listaLivros")) || []
@@ -23,6 +29,7 @@ window.onload = function() { // função que ocorre na hora que recarrega o site
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 // LIMPAR
+
 
 function limparListaDeUsuarios() {
     localStorage.removeItem("listaDeUsuarios")
@@ -43,16 +50,16 @@ function limparListaLivros() {
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 // CADASTRAR
 
+
 function cadastrarLivros(){
     let tituloLivro = document.getElementById("tituloLivro").value //vai armazenar o dado digitado (vai manipular os dados do ID no HTML)
     let autor = document.getElementById("autor").value
     let anoPublicacao = document.getElementById("anoPublicação").value
 
     let livroObj = {titulo: tituloLivro, autor: autor, anoPublicacao: anoPublicacao}// cria um obj com as propiedades digitadas
-    let livroIndex = livroObj.findIndex(livro => livro.titulo.tolowercase() === tituloLivro.tolowercase())
+    let livroIndex = listaLivros.findIndex(livro => livro.titulo.tolowercase() === tituloLivro.tolowercase())
 
     if(livroIndex == -1){ // vai ler o .finIndex e ser for true ele retorna um valor diferente de -1
-        listaLivros = JSON.parse(localStorage.getItem("listaLivros")) || []//talvez vou retirar por redundancia
         listaLivros.push(livroObj)
         listaLivros.sort((a, b) => a.titulo.localeCompare(b.titulo))
         localStorage.setItem("listaLivros", JSON.stringify(listaLivros))// salva os dados na maquina podendo fechar pagina
@@ -62,16 +69,14 @@ function cadastrarLivros(){
     }
 }
 
-
 function cadastrarUsuarios(){
     let usuario = document.getElementById("usuario").value //vai armazenar o dado digitado
     let email = document.getElementById("email").value
     let telefone = document.getElementById("telefone").value
     let dadosUsuarioObj = {nome: usuario, email: email, telefone: telefone} // cria um obj com as propiedades digitadas
-    let dadosUsuarioIndex = dadosUsuarioObj.findIndex(user => user.nome.tolowercase() === usuario.tolowercase())
+    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.nome.tolowercase() === usuario.tolowercase())
 
     if (dadosUsuarioIndex == -1){ // vai ler o .finIndex e ser for true ele retorna um valor diferente de -1
-    listaDeUsuarios = JSON.parse(localStorage.getItem("listaDeUsuarios")) || []//talvez vou retirar por redundancia
     listaDeUsuarios.push(dadosUsuarioObj)
     listaDeUsuarios.sort((a, b) => a.nome.localeCompare(b.nome))
     localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios)) // converte o objeto em string JSON e salva no storage
@@ -100,13 +105,11 @@ function cadastrarEmprestimos(){
         let tituloLivro = document.getElementById("tituloLivro").value
         let dataEmprestimo = document.getElementById("dataEmprestimo").value
         let emprestimo = {...usuario, livro: tituloLivro, dataEmprestimo: dataEmprestimo}
-        emprestimosEmAndamento = JSON.parse(localStorage.getItem("emprestimosEmAndamento")) || []//talvez vou retirar por redundancia
         emprestimosEmAndamento.push(emprestimo)
         emprestimosEmAndamento.sort((a, b) => a.nome.localeCompare(b.nome))
         localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))// converte o objeto em string JSON e salva no storage
 
 
-        livrosDisponiveis = JSON.parse(localStorage.getItem("livrosDisponiveis")) || []//talvez vou retirar por redundancia
         livrosDisponiveis.sort((a, b) => a.titulo.localeCompare(b.titulo))
         let livroIndex = livrosDisponiveis.findIndex(livro => livro.titulo.tolowercase() === tituloLivro.tolowercase())
 
@@ -115,7 +118,6 @@ function cadastrarEmprestimos(){
             livrosDisponiveis.splice(livroIndex, 1)  // Remove o livro da lista de livros disponíveis
             localStorage.setItem("livrosDisponiveis", JSON.stringify(livrosDisponiveis))// converte o objeto em string JSON e salva no storage
 
-            livrosIndisponiveis = JSON.parse(localStorage.getItem("livrosIndisponiveis")) || []//talvez vou retirar por redundancia
             livrosIndisponiveis.push({...livroObj, dataEmprestimo: dataEmprestimo})
             livrosIndisponiveis.sort((a, b) => a.titulo.localeCompare(b.titulo))
             localStorage.setItem("livrosIndisponiveis", JSON.stringify(livrosIndisponiveis))// converte o objeto em string JSON e salva no storage
@@ -128,11 +130,8 @@ function cadastrarEmprestimos(){
     }
 }
 
-
 function cadastrarDevolucoes(){
     let tituloLivro = document.getElementById("tituloLivroDevolucao").value
-
-    livrosIndisponiveis = JSON.parse(localStorage.getItem("livrosIndisponiveis")) || []//talvez vou retirar por redundancia
     let livroIndex = livrosIndisponiveis.findIndex(livro => livro.titulo === tituloLivro) 
 
     if(livroIndex !== -1) {
@@ -140,11 +139,9 @@ function cadastrarDevolucoes(){
         livrosIndisponiveis.splice(livroIndex, 1)  // Remove o livro da lista de livros indisponíveis
         localStorage.setItem("livrosIndisponiveis", JSON.stringify(livrosIndisponiveis))// converte o objeto em string JSON e salva no storage
 
-        let livrosDisponiveis = JSON.parse(localStorage.getItem("livrosDisponiveis")) || []//talvez vou retirar por redundancia
         livrosDisponiveis.push(livroObj)
         localStorage.setItem("livrosDisponiveis", JSON.stringify(livrosDisponiveis))// converte o objeto em string JSON e salva no storage
 
-        emprestimosEmAndamento = JSON.parse(localStorage.getItem("emprestimosEmAndamento")) || []//talvez vou retirar por redundancia
         let emprestimoIndex = emprestimosEmAndamento.findIndex(emprestimo => emprestimo.titulo.tolowercase() === tituloLivro.tolowercase())
 
         if(emprestimoIndex !== -1) {    
@@ -179,6 +176,8 @@ function cadastrarDevolucoes(){
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------------
+// BARRA DE PESQUISA
+
 
 function barraDePesquisaLivro(){
     let encontrarLivro = document.getElementById("").value.tolowercase()
@@ -214,45 +213,49 @@ function pesquisar(){
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-//EXIBIR
+// EXIBIR
 
 
 function exibirUsuarios(){
-    if (listaDeUsuarios && Array.isArray(listaDeUsuarios)) {
-        let lista = document.getElementById('lista')
-        listaDeUsuarios.forEach(function(elemento) {
-            let item = document.createElement('li')
-            item.textContent = elemento
+    if (listaDeUsuarios && Array.isArray(listaDeUsuarios)) {//confere se realmente é um array
+        let lista = document.getElementById("lista")
+        lista.innerHTML = ""
+
+        listaDeUsuarios.forEach(function(usuario) {
+            let item = document.createElement("li")
+            item.textContent = `Nome: ${usuario.nome} Email: ${usuario.email}, Telefone: ${usuario.telefone}`
             lista.appendChild(item)
         })
     } else {
-    console.error('Nenhum array válido encontrado no localStorage.');
+    console.error('Nenhum Usuário encontrado.');
     }
 }
 
 function exibirLivrosDisponiveis(){
     if (livrosDisponiveis && Array.isArray(livrosDisponiveis)) {
-        let lista = document.getElementById('lista')
-        livrosDisponiveis.forEach(function(elemento) {
-            let item = document.createElement('li')
-            item.textContent = elemento
+        let lista = document.getElementById("lista")
+        livrosDisponiveis.forEach(function(livro) {
+            let item = document.createElement("li")
+            item.textContent = `Titulo`
             lista.appendChild(item)
         })
     } else {
-    console.error('Nenhum array válido encontrado no localStorage.');
+    console.error('Nenhum livro disponível encontrado.');
     }
 }
 
 function exibirLivrosIndisponiveis(){
     if (livrosIndisponiveis && Array.isArray(livrosIndisponiveis)) {
-        let lista = document.getElementById('lista')
-        livrosIndisponiveis.forEach(function(elemento) {
-            let item = document.createElement('li')
-            item.textContent = elemento
+        let lista = document.getElementById("lista")
+        lista.innerHTML = ""
+
+        livrosIndisponiveis.forEach(function(livro) {
+            let item = document.createElement("li")
+            item.textContent = `Titulo: ${livro.titulo} Autor: ${livro.autor} Ano Publicação: ${livro.anoPublicacao} `
             lista.appendChild(item)
         })
     } else {
-    console.error('Nenhum array válido encontrado no localStorage.');
+    console.error("Nenhum livro indisponível encontrado.");
     }
 }
 
@@ -265,7 +268,7 @@ function exibirEmprestimosAtivos(){
             lista.appendChild(item)
         })
     } else {
-    console.error('Nenhum array válido encontrado no localStorage.');
+    console.error('Nenhum emprestimo ativo.');
     }
 }
 
@@ -278,7 +281,7 @@ function exibirEmprestimosEmDebito(){
             lista.appendChild(item)
         })
     } else {
-    console.error('Nenhum array válido encontrado no localStorage.');
+    console.error('Nenhum emprestimo em débito.');
     }
 }
 
