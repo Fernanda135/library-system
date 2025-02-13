@@ -81,7 +81,7 @@ function cadastrarUsuarios(){
 }
 
 function retirarCadastro(){
-    let retirarUsuario = document.getElementById("retirarUsuario")
+    let retirarUsuario = document.getElementById("retirarUsuario").value
     let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.nome.tolowercase() === retirarUsuario.tolowercase())
     if(dadosUsuarioIndex !== -1){
         listaDeUsuarios.splice(dadosUsuarioIndex, 1)
@@ -201,13 +201,13 @@ function barraDePesquisaUsuario(){//assim que pesquisar usando o email do usuari
 }
 
 function pesquisar(){
-    let termoPesquisa = document.getElementById("barraDePesquisa").value.toLowerCase();
-    let filtro = document.getElementById("filtro").value;
+    let termoPesquisa = document.getElementById("barraDePesquisa").value.toLowerCase()
+    let filtro = document.getElementById("filtro").value
 
     if (filtro === "livro") {
-        barraDePesquisaLivro(termoPesquisa);
+        barraDePesquisaLivro(termoPesquisa)
     } else if (filtro === "usuario") {
-        barraDePesquisaUsuario(termoPesquisa);
+        barraDePesquisaUsuario(termoPesquisa)
     }
 }
 
