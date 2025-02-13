@@ -98,8 +98,7 @@ function retirarCadastro(){
 
 function cadastrarEmprestimos(){
     let nomeUsuario = document.getElementById("nomeUsuario").value
-    listaDeUsuarios = JSON.parse(localStorage.getItem("listaDeUsuarios")) || []
-    let usuario = listaDeUsuarios.find(user => user.nome === nomeUsuario)
+    let usuario = listaDeUsuarios.find(user => user.nome === nomeUsuario)//o .find vai retornar o item para variavel usuario
 
     if(usuario) { //esse if só vai entrar se o usuário for encontrado(o resultado do .find for === true).
         let tituloLivro = document.getElementById("tituloLivro").value
@@ -159,13 +158,15 @@ function cadastrarDevolucoes(){
             se diferencaDias for maior que 7 -> multa = (diferencaDias - 7) * 1 . senão -> multa = 0 */
             let multa = diferencaDias > 7 ? (diferencaDias - 7) * 1 : 0
             if (multa > 0) {
-                emprestimosEmDebito.splice(emprestimoIndex, 1)//vai tirar o objeto da array emprestimosEmAndamento e vai colocar na array emprestimoEmDebito 
+                emprestimosEmDebito.push(emprestimosEmAndamento[emprestimoIndex])//vai colocar o objeto que esta constando como em debito na array emprestimosEmDebito
+                emprestimosEmAndamento.splice(emprestimoIndex, 1)//vai tirar o objeto da array emprestimosEmAndamento e vai colocar na array emprestimoEmDebito 
                 alert(`Devolução registrada com sucesso! Usuário deve pagar uma multa de R$ ${multa}.`)
             } else {
                 alert("Devolução registrada com sucesso! Nenhuma multa aplicada.")
             }
             emprestimosEmAndamento.splice(emprestimoIndex, 1)  // Remove o empréstimo do histórico
             localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))// converte o objeto em string JSON e salva no storage
+            localStorage.setItem("emprestimosEmDebito", JSON.stringify(emprestimosEmDebito))// converte o objeto em string JSON e salva no storage
         }
         alert("Devolução registrada com sucesso e usuário desvinculado!")
     }else{
@@ -213,7 +214,7 @@ function pesquisar(){
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-// EXIBIR
+// EXIBIR TUDO
 
 
 function exibirUsuarios(){
@@ -234,9 +235,11 @@ function exibirUsuarios(){
 function exibirLivrosDisponiveis(){
     if (livrosDisponiveis && Array.isArray(livrosDisponiveis)) {
         let lista = document.getElementById("lista")
+        lista.innerHTML = ""
+
         livrosDisponiveis.forEach(function(livro) {
             let item = document.createElement("li")
-            item.textContent = `Titulo`
+            item.textContent = `Titulo: ${livro.titulo} Autor: ${livro.autor} Ano Publicação: ${livro.anoPublicacao} `
             lista.appendChild(item)
         })
     } else {
@@ -261,10 +264,12 @@ function exibirLivrosIndisponiveis(){
 
 function exibirEmprestimosAtivos(){
     if (emprestimosEmAndamento && Array.isArray(emprestimosEmAndamento)) {
-        let lista = document.getElementById('lista')
-        emprestimosEmAndamento.forEach(function(elemento) {
-            let item = document.createElement('li')
-            item.textContent = elemento
+        let lista = document.getElementById("lista")
+        lista.innerHTML = ""
+
+        emprestimosEmAndamento.forEach(function(emprestimo) {
+            let item = document.createElement("li")
+            item.textContent = `Nome: ${emprestimo.nome} Livro: ${emprestimo.livro} Data Locação: ${emprestimo.dataEmprestimo}`
             lista.appendChild(item)
         })
     } else {
@@ -274,10 +279,17 @@ function exibirEmprestimosAtivos(){
 
 function exibirEmprestimosEmDebito(){
     if (emprestimosEmDebito && Array.isArray(emprestimosEmDebito)) {
-        let lista = document.getElementById('lista')
-        emprestimosEmDebito.forEach(function(elemento) {
-            let item = document.createElement('li')
-            item.textContent = elemento
+        let lista = document.getElementById("lista")
+
+        emprestimosEmDebito.forEach(function(emprestimo) {
+            let item = document.createElement("li")
+
+            let dataEmprestimo = new Date(emprestimo.dataEmprestimo);
+            let dataDevolucao = new Date();
+            let diferencaDias = Math.floor((dataDevolucao - dataEmprestimo) / (1000 * 60 * 60 * 24));
+            let multa = diferencaDias > 7 ? (diferencaDias - 7) * 1 : 0
+
+            item.textContent = `Nome: ${emprestimo.nome} Livro: ${emprestimo.livro} Data Locação: ${emprestimo.dataEmprestimo} Multa: R$ ${multa}`
             lista.appendChild(item)
         })
     } else {
