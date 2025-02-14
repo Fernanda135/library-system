@@ -17,6 +17,7 @@ let emprestimosEmDebito = []
 
 
 window.onload = function() { // função que ocorre na hora que recarrega o site, ela vai estar armazenando cada array
+    
     listaLivros = JSON.parse(localStorage.getItem("listaLivros")) || []
     listaDeUsuarios = JSON.parse(localStorage.getItem("listaDeUsuarios")) || []
     livrosDisponiveis = JSON.parse(localStorage.getItem("livrosDisponiveis")) || []
@@ -183,7 +184,7 @@ function cadastrarDevolucoes(){
 window.onload = function() {
     const dataAtual = new Date();
 
-    emprestimosEmAndamento.forEach(emprestimo, index => {
+    emprestimosEmAndamento?.forEach((emprestimo, index) => {
         const dataLocacao = new Date(emprestimosEmAndamento.dataLocacao);
         const diferencaDias = Math.floor((dataAtual - dataLocacao) / (1000 * 60 * 60 * 24));
 
