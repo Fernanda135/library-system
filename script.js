@@ -74,12 +74,12 @@ function cadastrarUsuarios(){
     let email = document.getElementById("email").value
     let telefone = document.getElementById("telefone").value
     let dadosUsuarioObj = {nome: usuario, email: email, telefone: telefone} // cria um obj com as propiedades digitadas
-    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.nome.tolowercase() === usuario.tolowercase())
+    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.email.tolowercase() === email.tolowercase())
 
     if (dadosUsuarioIndex == -1){ // vai ler o .finIndex e ser for true ele retorna um valor diferente de -1
     listaDeUsuarios.push(dadosUsuarioObj)
     listaDeUsuarios.sort((a, b) => a.nome.localeCompare(b.nome))
-    localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios)) // converte o objeto em string JSON e salva no storage
+    localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios)) // converte o objeto em string JSON e salva no storage (o que está dentro das aspas é a chave da lista)
     }else{
         alert("Usuário já está cadastrado")
     }
@@ -87,7 +87,7 @@ function cadastrarUsuarios(){
 
 function retirarCadastro(){
     let retirarUsuario = document.getElementById("retirarUsuario").value
-    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.nome.tolowercase() === retirarUsuario.tolowercase())
+    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.email.tolowercase() === retirarUsuario.tolowercase())
     if(dadosUsuarioIndex !== -1){
         listaDeUsuarios.splice(dadosUsuarioIndex, 1)
         localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios))
@@ -96,9 +96,9 @@ function retirarCadastro(){
     }
 }
 
-function cadastrarEmprestimos(){
-    let nomeUsuario = document.getElementById("nomeUsuario").value
-    let usuario = listaDeUsuarios.find(user => user.nome === nomeUsuario)//o .find vai retornar o item para variavel usuario
+function cadastrarEmprestimos(){//troquei usuario por email - pode dar errado
+    let emailUsuario = document.getElementById("emailUsuario").value
+    let usuario = listaDeUsuarios.find(user => user.email === emailUsuario)//o .find vai retornar o item para variavel usuario
 
     if(usuario) { //esse if só vai entrar se o usuário for encontrado(o resultado do .find for === true).
         let tituloLivro = document.getElementById("tituloLivro").value
@@ -159,12 +159,11 @@ function cadastrarDevolucoes(){
             let multa = diferencaDias > 7 ? (diferencaDias - 7) * 1 : 0
             if (multa > 0) {
                 emprestimosEmDebito.push(emprestimosEmAndamento[emprestimoIndex])//vai colocar o objeto que esta constando como em debito na array emprestimosEmDebito
-                emprestimosEmAndamento.splice(emprestimoIndex, 1)//vai tirar o objeto da array emprestimosEmAndamento e vai colocar na array emprestimoEmDebito 
+                emprestimosEmAndamento.splice(emprestimoIndex, 1)
                 alert(`Devolução registrada com sucesso! Usuário deve pagar uma multa de R$ ${multa}.`)
             } else {
                 alert("Devolução registrada com sucesso! Nenhuma multa aplicada.")
             }
-            emprestimosEmAndamento.splice(emprestimoIndex, 1)  // Remove o empréstimo do histórico
             localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))// converte o objeto em string JSON e salva no storage
             localStorage.setItem("emprestimosEmDebito", JSON.stringify(emprestimosEmDebito))// converte o objeto em string JSON e salva no storage
         }
@@ -172,6 +171,41 @@ function cadastrarDevolucoes(){
     }else{
         alert("Livro não encontrado na lista de indisponíveis!")
     }
+}
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+// CALCULA MULTA AUTOMATICA
+
+
+window.onload = function() {
+    const dataAtual = new Date();
+
+    emprestimosEmAndamento.forEach(emprestimo, index => {
+        const dataLocacao = new Date(emprestimosEmAndamento.dataLocacao);
+        const diferencaDias = Math.floor((dataAtual - dataLocacao) / (1000 * 60 * 60 * 24));
+
+        let tituloLivro = emprestimosEmAndamento.livro
+        let dataEmprestimo = emprestimosEmAndamento.dataEmprestimo
+        let nome = emprestimosEmAndamento.nome
+        let email = emprestimosEmAndamento.email
+        let telefone = emprestimosEmAndamento.telefone
+        
+        // Verifica se o empréstimo está em débito
+        if (diferencaDias > 7) {
+
+            // Calcula a multa
+            const multa = (diferencaDias - 7) * 1; // 1 real por dia após 7 dias
+
+            emprestimosEmAndamento.splice(index, 1)// retira da lista emprestimosEmAndamento
+            let usuarioDebitoObj = {nome: nome, email: email, telefone: telefone, livro: tituloLivro, dataEmprestimo: dataEmprestimo, multa: multa}
+            emprestimosEmDebito.push(usuarioDebitoObj)
+        }
+    });
+
+    // Atualiza a lista de empréstimos em débito no localStorage
+    localStorage.setItem("emprestimosEmDebito", JSON.stringify(emprestimosEmDebito));
 }
 
 
@@ -192,7 +226,7 @@ function barraDePesquisaLivro(){
 
 function barraDePesquisaUsuario(){//assim que pesquisar usando o email do usuario vai encontrar o cadastro dele
     let encontrarUsuario = document.getElementById("").value.tolowercase()
-    usuarioIndex = listaDeUsuarios.findIndex(user => user.email.tolowercase() === encontrarUsuario.tolowercase())
+    usuarioIndex = listaDeUsuarios.findIndex(user => user.email.tolowercase() === encontrarUsuario.tolowercase())//pesquisa usuario pelo email
     if(usuarioIndex !== -1){
         alert("Livro Está Disponível Para Locação!")
     }else{
