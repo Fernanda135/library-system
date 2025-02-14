@@ -52,9 +52,9 @@ function limparListaLivros() {
 
 
 function cadastrarLivros(){
-    let tituloLivro = document.getElementById("tituloLivro").value //vai armazenar o dado digitado (vai manipular os dados do ID no HTML)
+    let tituloLivro = document.getElementById("titulo").value //vai armazenar o dado digitado (vai manipular os dados do ID no HTML)
     let autor = document.getElementById("autor").value
-    let anoPublicacao = document.getElementById("anoPublicação").value
+    let anoPublicacao = document.getElementById("ano").value
 
     let livroObj = {titulo: tituloLivro, autor: autor, anoPublicacao: anoPublicacao}// cria um obj com as propiedades digitadas
     let livroIndex = listaLivros.findIndex(livro => livro.titulo.tolowercase() === tituloLivro.tolowercase())
