@@ -11,33 +11,33 @@
         <nav>
             <ul class="navegacao">
                 <li class="dropdown">
-                <button><a href="">USUÁRIOS</a></button>
-                <div class="dropdown-user">
-                    <a href="cadUser.html">CADASTRAR USUÁRIOS</a>
-                    <a href="listUser.html">USUÁRIOS CADASTRADOS</a>
-                    <a href="retCad.html">RETIRAR CADASTRO</a>
-                    <a href="empAtv.html">USUÁRIOS COM LIVROS</a>
-                    <a href="empDeb.html">USUÁRIOS EM DÉBITO</a>
-                    <a class="clear-user" href="">LIMPAR LISTA</a>
-                </div>
-            </li>
-            <li class="dropdown">
-                <button><a href="">LIVROS</a></button>
-                <div class="dropdown-livro">
-                    <a href="cadLivro.html">CADASTRAR LIVRO</a>
-                    <a href="livDis.html">LIVROS DISPONÍVEIS</a>
-                    <a href="livInd.html">LIVROS INDISPONÍVEIS</a>
-                    <a class="clear-livro" href="">LIMPAR LISTA</a>
-                </div>
-            </li>
-            <li class="dropdown">
-                <button><a href="">LOCAR</a></button>
-                <div class="dropdown-locar">
-                    <a href="Locar.html">LOCAR LIVROS</a>
-                    <a href="empAtv.html">EMPRÉSTIMOS ATIVOS</a>
-                    <a href="empDeb.html">EMPRÉSTIMOS EM DÉBITO</a>
-                </div>
-            </li>
+                    <button><a href="#">USUÁRIOS</a></button>
+                    <div class="dropdown-user">
+                        <a href="cadUser.html">CADASTRAR USUÁRIOS</a>
+                        <a href="listUser.html">USUÁRIOS CADASTRADOS</a>
+                        <a href="retCad.html">RETIRAR CADASTRO</a>
+                        <a href="empAtv.html">USUÁRIOS COM LIVROS</a>
+                        <a href="empDeb.html">USUÁRIOS EM DÉBITO</a>
+                        <a class="clear-user" onclick="limparListaDeUsuarios()">LIMPAR LISTA</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <button><a href="#">LIVROS</a></button>
+                    <div class="dropdown-livro">
+                        <a href="cadLivro.html">CADASTRAR LIVRO</a>
+                        <a href="livDis.html">LIVROS DISPONÍVEIS</a>
+                        <a href="livInd.html">LIVROS INDISPONÍVEIS</a>
+                        <a class="clear-livro" onclick="limparListaLivros()">LIMPAR LISTA</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <button><a href="#">LOCAR</a></button>
+                    <div class="dropdown-locar">
+                        <a href="Locar.html">LOCAR LIVROS</a>
+                        <a href="empAtv.html">EMPRÉSTIMOS ATIVOS</a>
+                        <a href="empDeb.html">EMPRÉSTIMOS EM DÉBITO</a>
+                    </div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -49,7 +49,7 @@
                 <div class="search-bar">
                     <input type="text" placeholder="PESQUISAR" class="search-input">
                 </div>
-                <select id="filtro" class="filter-btn">
+                <button class="search-button" onclick="pesquisar()">Pesquisar</button> <select id="filtro" class="filter-btn">
                     <option value="livro">Livro</option>
                     <option value="usuario">Usuário</option>
                 </select>

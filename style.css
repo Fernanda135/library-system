@@ -56,18 +56,30 @@ h1 {
     display: flex;
     max-width: 600px;
     width: 100%;
+    align-items: center;
 }
 
 .search-bar {
     flex: 1;
+    margin-right: 10px;
 }
 
 .search-input {
-    width: 114%;
+    width: 100%;
     padding: 1rem;
     border: none;
     border-radius: 105px;
     background: white;
+}
+
+.search-button {
+    padding: 1rem 1.5rem;
+    background-color: rgb(34, 34, 34);
+    color: white;
+    border: none;
+    border-radius: 105px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .filter-btn {
@@ -75,9 +87,10 @@ h1 {
     color: rgb(255, 255, 255);
     border-radius: 100px;
     cursor: pointer;
-    background-color: rgb(34, 34, 35);
+    background-color: rgb(34, 34, 34);
     font-weight: bold;
     width: 105px;
+    margin-left: 10px;
 }
 
 button {
@@ -162,6 +175,7 @@ nav li a{
     box-shadow: 0 0 5px black;
     display: none;
     width: 215px;
+    cursor: pointer;
 }
 
 .clear-user {
@@ -171,4 +185,5 @@ nav li a{
     box-shadow: 0 0 5px black;
     display: none;
     width: 238px;
+    cursor: pointer;
 }

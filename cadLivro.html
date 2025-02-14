@@ -8,30 +8,30 @@
 </head>
 <header>
     <nav>
-            <button class="menu-btn">
-              <a href="index-main.html">MENU</a> 
-            </button>
+        <button class="menu-btn">
+            <a href="index-main.html">MENU</a> 
+        </button>
     </nav>
 </header>
 <body>
     <div class="container">
-        <form class="box">
+        <form class="box" onsubmit="cadastrarLivros()">
             <label>
                 <p>CADASTRAR LIVRO</p>
             </label>
             <div class="input-group">
                 <label for="titulo">Título</label>
-                <input type="text" placeholder="Insira o título do livro">
+                <input type="text" id="titulo" placeholder="Insira o título do livro" required>
             </div>
             <div class="input-group">
                 <label for="autor">Autor</label>
-                <input type="text"placeholder="Insira o nome do autor">
+                <input type="text" id="autor" placeholder="Insira o nome do autor" required>
             </div>
             <div class="input-group">
                 <label for="ano">Ano Publicação</label>
-                <input type="number" placeholder="Insira o ano de lançamento">
+                <input type="number" id="ano" placeholder="Insira o ano de lançamento" required>
             </div>
-            <button type="submit" onclick="cadastrarLivros()">ENVIAR</button>
+            <button type="submit" onclick="">ENVIAR</button>
         </form>
     </div>
     <script src="script.js"></script>
