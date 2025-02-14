@@ -1,0 +1,48 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background: url('./img/BACKGOUND\ CADASTRO.jpg') center/ cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 80%;
+    max-width: 900px;
+    background: rgba(249, 248, 248, 0.899);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.header {
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+header {
+    padding: 1rem;
+    position: fixed;
+    width: 85%;
+    top: 0%;
+}
+
+.menu-btn {
+    background-color: rgba(0, 0, 0, 0.699);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.menu-btn a {
+    color: white;
+    text-decoration: none;
+}

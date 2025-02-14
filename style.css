@@ -1,0 +1,174 @@
+body {
+    background-image: url('./img/BACKGROUND\ MENU.jpg');
+    background-size: cover;
+}
+
+header {
+    background: #0000009f;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0%;
+}
+
+nav {
+    text-align: center;
+}
+
+.navegacao {
+    display: inline-block;
+    justify-content: center;
+    list-style-type: none;
+}
+
+.navegacao a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navegacao a:hover{
+    color: black;
+    background-color: rgb(254, 254, 254);
+}
+
+
+.logo {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    color: rgb(255, 255, 255);
+}
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    text-align: center;
+    -webkit-text-stroke: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+.search-container {
+    display: flex;
+    max-width: 600px;
+    width: 100%;
+}
+
+.search-bar {
+    flex: 1;
+}
+
+.search-input {
+    width: 114%;
+    padding: 1rem;
+    border: none;
+    border-radius: 105px;
+    background: white;
+}
+
+.filter-btn {
+    padding: 1rem 1rem;
+    color: rgb(255, 255, 255);
+    border-radius: 100px;
+    cursor: pointer;
+    background-color: rgb(34, 34, 35);
+    font-weight: bold;
+    width: 105px;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav li{
+    display: inline-block;
+}
+
+nav li a{
+    border-radius: 10px;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+}
+
+
+.dropdown-livro{
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.675);
+    position: absolute;
+    box-shadow: 0 0 5px black;
+    display: none;
+}
+
+.dropdown-livro a{
+    display: block;
+    color: black;
+}
+
+.dropdown:hover .dropdown-livro{
+    display: block;
+}
+
+.dropdown-locar{
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.675);
+    position: absolute;
+    box-shadow: 0 0 5px black;
+    display: none;
+}
+
+.dropdown-locar a{
+    display: block;
+    color: black;
+}
+
+.dropdown:hover .dropdown-locar{
+    display: block;
+}
+
+.dropdown-user{
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.675);
+    position: absolute;
+    box-shadow: 0 0 5px black;
+    display: none;
+}
+
+.dropdown-user a{
+    display: block;
+    color: black;
+}
+
+.dropdown:hover .dropdown-user{
+    display: block;
+}
+
+.clear-livro {
+    border-radius: 10px;
+    background-color: rgba(255, 0, 0, 0.852);
+    position: absolute;
+    box-shadow: 0 0 5px black;
+    display: none;
+    width: 215px;
+}
+
+.clear-user {
+    border-radius: 10px;
+    background-color: rgba(255, 0, 0, 0.852);
+    position: absolute;
+    box-shadow: 0 0 5px black;
+    display: none;
+    width: 238px;
+}

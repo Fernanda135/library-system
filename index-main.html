@@ -4,16 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Library</title>
-    <script>"script.js"</script>
-    <link rel="stylesheet" href="style-main.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <nav>
             <ul class="navegacao">
-                <button><a href="gerUser.html">USUÁRIOS</a></button>
-                <button><a href="gerLivro.html">LIVROS</a></button>
-                <button><a href="gerLocar.html">LOCAR</a></button>
+                <li class="dropdown">
+                <button><a href="">USUÁRIOS</a></button>
+                <div class="dropdown-user">
+                    <a href="cadUser.html">CADASTRAR USUÁRIOS</a>
+                    <a href="listUser.html">USUÁRIOS CADASTRADOS</a>
+                    <a href="retCad.html">RETIRAR CADASTRO</a>
+                    <a href="empAtv.html">USUÁRIOS COM LIVROS</a>
+                    <a href="empDeb.html">USUÁRIOS EM DÉBITO</a>
+                    <a class="clear-user" href="">LIMPAR LISTA</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <button><a href="">LIVROS</a></button>
+                <div class="dropdown-livro">
+                    <a href="cadLivro.html">CADASTRAR LIVRO</a>
+                    <a href="livDis.html">LIVROS DISPONÍVEIS</a>
+                    <a href="livInd.html">LIVROS INDISPONÍVEIS</a>
+                    <a class="clear-livro" href="">LIMPAR LISTA</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <button><a href="">LOCAR</a></button>
+                <div class="dropdown-locar">
+                    <a href="Locar.html">LOCAR LIVROS</a>
+                    <a href="empAtv.html">EMPRÉSTIMOS ATIVOS</a>
+                    <a href="empDeb.html">EMPRÉSTIMOS EM DÉBITO</a>
+                </div>
+            </li>
             </ul>
         </nav>
     </header>
@@ -32,5 +56,6 @@
             </div>
         </div>
     </main>
+    <script src="script.js"></script>
 </body>
 </html>
