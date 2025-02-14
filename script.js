@@ -80,6 +80,7 @@ function cadastrarUsuarios(){
     listaDeUsuarios.push(dadosUsuarioObj)
     listaDeUsuarios.sort((a, b) => a.nome.localeCompare(b.nome))
     localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios)) // converte o objeto em string JSON e salva no storage (o que está dentro das aspas é a chave da lista)
+    alert("Cadastro concluído")
     }else{
         alert("Usuário já está cadastrado")
     }
