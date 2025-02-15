@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background: url('/css/BACKGOUND\ CADASTRO.jpg') center/ cover;
+    background: url('BACKGROUND\ EMPRESTIMOS.png') center/ cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@ body {
 .container {
     width: 80%;
     max-width: 900px;
-    background: rgba(249, 248, 248, 0.899);
+    background: rgba(249, 248, 248, 0.801);
     border-radius: 20px;
     padding: 20px;
     text-align: center;
