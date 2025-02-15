@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background: url('./img/BACKGOUND\ CADASTRO.jpg') center/ cover;
+    background: url('/css/BACKGOUND\ CADASTRO.jpg') center/ cover;
     display: flex;
     justify-content: center;
     align-items: center;
