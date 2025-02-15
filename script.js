@@ -184,6 +184,7 @@ function cadastrarDevolucoes(){
 window.onload = function() {
     const dataAtual = new Date();
 
+    console.log("1111", emprestimosEmAndamento)
     emprestimosEmAndamento?.forEach((emprestimo, index) => {
         const dataLocacao = new Date(emprestimosEmAndamento.dataLocacao);
         const diferencaDias = Math.floor((dataAtual - dataLocacao) / (1000 * 60 * 60 * 24));
