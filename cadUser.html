@@ -4,34 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Livros</title>
-    <link rel="stylesheet" href="styleUser.css">
+    <link rel="stylesheet" href="./css/styleLivro.css">
 </head>
+<header>
+    <nav>
+        <button class="menu-btn">
+            <a href="index-main.html">MENU</a> 
+        </button>
+    </nav>
+</header>
 <body>
-    <header>
-        <nav>
-                <button class="menu-btn">
-                    <a href="index-main.html">MENU</a> 
-                </button>
-        </nav>
-    </header>
     <div class="container">
         <form class="box">
-            <label>
-                <p>CADASTRAR USUÁRIO</p>
-            </label>
+            <div>
+                <p>CADASTRAR USUARIO</p>
+            </div>
             <div class="input-group">
-                <label for="nome">Nome</label>
-                <input id="nome" type="text" placeholder="Insira seu nome">
+                <label for="titulo">Nome</label>
+                <input type="text" id="usuario" placeholder="Insira o nome do usuario" required>
             </div>
             <div class="input-group">
                 <label for="email">Email</label>
-                <input id="email" type="text" placeholder="Insira seu email">
+                <input type="text" id="email" placeholder="Insira o nome o email" required>
             </div>
             <div class="input-group">
-                <label for="telefone">Número de Telefone</label>
-                <input id="telefone" type="number" placeholder="Insira seu número de telefone">
+                <label for="telefone">Telefone</label>
+                <input type="number" id="telefone" placeholder="Insira o número de telefone" required>
             </div>
-            <button type="submit">ENVIAR</button>
+            <button onclick="cadastrarUsuarios()" type="submit">ENVIAR</button>
         </form>
     </div>
     <script src="script.js"></script>

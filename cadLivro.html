@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Livros</title>
-    <link rel="stylesheet" href="styleLivro.css">
+    <link rel="stylesheet" href="./css/styleLivro.css">
 </head>
 <header>
     <nav>
@@ -15,10 +15,10 @@
 </header>
 <body>
     <div class="container">
-        <form class="box" onsubmit="cadastrarLivros()">
-            <label>
+        <form class="box">
+            <div>
                 <p>CADASTRAR LIVRO</p>
-            </label>
+            </div>
             <div class="input-group">
                 <label for="titulo">Título</label>
                 <input type="text" id="titulo" placeholder="Insira o título do livro" required>
@@ -31,7 +31,7 @@
                 <label for="ano">Ano Publicação</label>
                 <input type="number" id="ano" placeholder="Insira o ano de lançamento" required>
             </div>
-            <button type="submit" onclick="">ENVIAR</button>
+            <button onclick="cadastrarLivros()" type="submit">ENVIAR</button>
         </form>
     </div>
     <script src="script.js"></script>
