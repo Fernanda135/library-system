@@ -25,6 +25,7 @@
                     <button><a href="#">LIVROS</a></button>
                     <div class="dropdown-livro">
                         <a href="cadLivro.html">CADASTRAR LIVRO</a>
+                        <a href="devLivro.html">DEVOLVER LIVRO</a>
                         <a href="livDis.html">LIVROS DISPONÍVEIS</a>
                         <a href="livInd.html">LIVROS INDISPONÍVEIS</a>
                         <a class="clear-livro" onclick="limparListaLivros()">LIMPAR LISTA</a>
@@ -47,15 +48,16 @@
             <h1>System<br>LIBRARY</h1>
             <div class="search-container">
                 <div class="search-bar">
-                    <input id="pesquisar" type="text" placeholder="PESQUISAR" class="search-input">
+                    <input type="text" id="barraDePesquisa"  placeholder="PESQUISAR" class="search-input">
                 </div>
-                <button class="search-button" onclick="pesquisar()">Pesquisar</button> <select id="filtro" class="filter-btn">
-                    <option value="livro">Livro</option>
-                    <option value="usuario">Usuário</option>
+                <button class="search-button" onclick="barraDePesquisa()">Pesquisar</button> 
+                <select id="tipoPesquisa" class="filter-btn">
+                    <option value="livros">Livros</option>
+                    <option value="usuarios">Usuários</option>
                 </select>
             </div>
         </div>
     </main>
-    <script src="/script.js"></script>
+    <script src="file:///C:Users/thygo/Downloads/LIBRARY-SYSTEM/script.js"></script>
 </body>
 </html>

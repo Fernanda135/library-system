@@ -15,25 +15,25 @@
 </header>
 <body>
     <div class="container">
-        <form class="box">
+        <form class="box" onsubmit="cadastrarUsuarios(event)">
             <div>
                 <p>CADASTRAR USUARIO</p>
             </div>
             <div class="input-group">
-                <label for="titulo">Nome</label>
-                <input type="text" id="usuario" placeholder="Insira o nome do usuario" required>
+                <label for="usuario">Nome</label>
+                <input type="text" id="usuario" placeholder="Insira o nome do usuario" required autocomplete="on">
             </div>
             <div class="input-group">
                 <label for="email">Email</label>
-                <input type="text" id="email" placeholder="Insira o nome o email" required>
+                <input type="text" id="email" placeholder="Insira o nome o email" required autocomplete="on">
             </div>
             <div class="input-group">
                 <label for="telefone">Telefone</label>
-                <input type="number" id="telefone" placeholder="Insira o número de telefone" required>
+                <input type="number" id="telefone" placeholder="Insira o número de telefone" required autocomplete="on">
             </div>
-            <button onclick="cadastrarUsuarios()" type="submit">ENVIAR</button>
+            <button type="submit">ENVIAR</button>
         </form>
     </div>
-    <script src="/script.js"></script>
+    <script src="file:///C:Users/thygo/Downloads/LIBRARY-SYSTEM/script.js"></script>
 </body>
 </html>

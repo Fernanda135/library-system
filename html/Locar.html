@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Livros</title>
+    <title>Locar Livro</title>
     <link rel="stylesheet" href="../css/styleLocar.css">
 </head>
 <header>
@@ -16,23 +16,23 @@
     <div class="container">
         <form class="box">
             <div>
-                <p>CADASTRAR LIVRO</p>
+                <p>LOCAR LIVRO</p>
             </div>
             <div class="input-group">
-                <label for="email">Email</label>
+                <label for="emailUsuario">Email</label>
                 <input id="emailUsuario" type="email" placeholder="Insira o seu email">
             </div>
             <div class="input-group">
-                <label for="livro">Livro</label>
+                <label for="tituloLivro">Livro</label>
                 <input id="tituloLivro" type="text" placeholder="Insira o nome do livro">
             </div>
             <div class="input-group">
-                <label for="data">Data de Locação</label>
+                <label for="dataEmprestimo">Data de Locação</label>
                 <input id="dataEmprestimo" type="date">
             </div>
-            <button onclick="cadastrarEmprestimos()" type="submit">ENVIAR</button>
+            <button onclick="cadastrarEmprestimos(event)" type="submit">ENVIAR</button>
         </form>
     </div>
-    <script src="/script.js"></script>
+    <script src="file:///C:Users/thygo/Downloads/LIBRARY-SYSTEM/script.js"></script>
 </body>
 </html>

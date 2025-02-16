@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Livros</title>
+    <title>Devolução Livros</title>
     <link rel="stylesheet" href="../css/styleUser.css">
 </head>
 <body>
@@ -17,13 +17,17 @@
     <div class="container">
         <form class="box">
             <div>
-                <p>RETIRAR CADASTRO</p>
+                <p>DEVOLVER LIVRO</p>
             </div>
             <div class="input-group">
-                <label for="retirarUsuario">Email Do Usuário</label>
-                <input id="retirarUsuario" type="text" placeholder="Insira o email">
+                <label for="emailUsuario">Email</label>
+                <input id="emailUsuario" type="email" placeholder="Insira o seu email">
             </div>
-            <button onclick="retirarCadastro(event)" type="submit">ENVIAR</button>
+            <div class="input-group">
+                <label for="tituloLivroDevolucao">Título Livro</label>
+                <input id="tituloLivroDevolucao" type="text" placeholder="Insira o titulo do livro">
+            </div>
+            <button onclick="cadastrarDevolucoes(event)" type="submit">ENVIAR</button>
         </form>
     </div>
     <script src="file:///C:Users/thygo/Downloads/LIBRARY-SYSTEM/script.js"></script>
