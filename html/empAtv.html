@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMPRETIMOS ATIVOS</title>
-    <link rel="stylesheet" href="../css/listEmpAtivos.css">
+    <title>USUÁRIOS CADASTRADOS</title>
+    <link rel="stylesheet" href="../css/listususarios.css">
 </head>
 <body>
-    <ul id="exibirAtivos"></ul>
     <header>
         <nav>
-                <button class="menu-btn">
-                    <a href="index-main.html">MENU</a> 
-                </button>
+            <button class="menu-btn">
+                <a href="index-main.html">MENU</a>
+            </button>
         </nav>
     </header>
+
     <div class="container">
         <div class="header">
-            <span>EMPRETIMOS ATIVOS</span>
+            <p>EMPRÉSTIMOS ATIVOS</p>
+            <button class="exibir" id="exibirAtivosBtn" onclick="exibirEmprestimosAtivos()">exibir</button>
         </div>
-        <div class="content">
+        <div class="lista">
+            <ul class="lista" id="exibirAtivosBtn"></ul>
         </div>
     </div>
-    <button id="carregarAtivos">Carregar Emprestimos Ativos</button>
+
     <script src="../script.js"></script>
 </body>
 </html>

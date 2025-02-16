@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USUÁRIOS CADASTRADOS</title>
-    <link rel="stylesheet" href="../css/listUsusarios.css">
+    <link rel="stylesheet" href="../css/listususarios.css">
 </head>
 <body>
-    <ul id="exibirListaUsuarios"></ul>
     <header>
         <nav>
             <button class="menu-btn">
-                <a href="index-main.html">MENU</a> 
+                <a href="index-main.html">MENU</a>
             </button>
         </nav>
     </header>
+
     <div class="container">
         <div class="header">
-            <span>USUÁRIOS CADASTRADOS</span>
+            <p>USUÁRIOS CADASTRADOS</p>
+            <button class="exibir" id="exibirListaUsuariosBtn" onclick="exibirUsuarios()">exibir</button>
+        </div>
+        <div class="lista">
+            <ul class="lista" id="exibirListaUsuariosBtn"></ul>
         </div>
     </div>
-    <button id="carregarUsuarios">Carregar Usuários</button>
+
     <script src="../script.js"></script>
 </body>
 </html>

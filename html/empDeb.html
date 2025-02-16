@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMPRESTIMOS EM DÉBITO</title>
-    <link rel="stylesheet" href="../css/listEmpDeb.css">
+    <title>USUÁRIOS CADASTRADOS</title>
+    <link rel="stylesheet" href="../css/listususarios.css">
 </head>
 <body>
-    <ul id="exibirEmDebito"></ul>
     <header>
         <nav>
-                <button class="menu-btn">
-                    <a href="index-main.html">MENU</a> 
-                </button>
+            <button class="menu-btn">
+                <a href="index-main.html">MENU</a>
+            </button>
         </nav>
     </header>
+
     <div class="container">
         <div class="header">
-            <span>EMPRESTIMOS EM DÉBITO</span>
+            <p>EMPRÉSTIMOS EM DÉBITO</p>
+            <button class="exibir" id="exibirEmDebitoBtn" onclick="exibirEmprestimosEmDebito()">exibir</button>
         </div>
-        <div class="content">
+        <div class="lista">
+            <ul class="lista" id="exibirEmDebitoBtn"></ul>
         </div>
     </div>
-    <button id="carregarEmDebito">Carregar Emprestimos em Débito</button>
+
     <script src="../script.js"></script>
 </body>
 </html>

@@ -366,7 +366,7 @@ function addListeners() {
 function exibirUsuarios(){
 
     if (listaDeUsuarios && Array.isArray(listaDeUsuarios)) {//confere se realmente é um array
-        let lista = document.getElementById("exibirListaUsuarios")
+        let lista = document.getElementById("exibirListaUsuariosBtn")
         lista.innerHTML = ""
         listaDeUsuarios.forEach(function(usuario) {
             let item = document.createElement("li")
@@ -380,7 +380,7 @@ function exibirUsuarios(){
 
 function exibirLivrosDisponiveis(){
     if (livrosDisponiveis && Array.isArray(livrosDisponiveis)) {
-        let lista = document.getElementById("exibirDisponiveis")
+        let lista = document.getElementById("exibirDisponiveisBtn")
         lista.innerHTML = ""
         livrosDisponiveis.forEach(function(livro) {
             let item = document.createElement("li")
@@ -394,7 +394,7 @@ function exibirLivrosDisponiveis(){
 
 function exibirLivrosIndisponiveis(){
     if (livrosIndisponiveis && Array.isArray(livrosIndisponiveis)) {
-        let lista = document.getElementById("exibirIndisponiveis")
+        let lista = document.getElementById("exibirIndisponiveisBtn")
         lista.innerHTML = ""
         livrosIndisponiveis.forEach(function(livro) {
             let item = document.createElement("li")
@@ -408,7 +408,7 @@ function exibirLivrosIndisponiveis(){
 
 function exibirEmprestimosAtivos(){
     if (emprestimosEmAndamento && Array.isArray(emprestimosEmAndamento)) {
-        let lista = document.getElementById("exibirAtivos")
+        let lista = document.getElementById("exibirAtivosBtn")
         lista.innerHTML = ""
         emprestimosEmAndamento.forEach(function(emprestimo) {
             let item = document.createElement("li")
@@ -422,7 +422,7 @@ function exibirEmprestimosAtivos(){
 
 function exibirEmprestimosEmDebito(){
     if (emprestimosEmDebito && Array.isArray(emprestimosEmDebito)) {
-        let lista = document.getElementById("exibirEmDebito")
+        let lista = document.getElementById("exibirEmDebitoBtn")
         lista.innerHTML = ""
         emprestimosEmDebito.forEach(function(emprestimo) {
             let item = document.createElement("li")
