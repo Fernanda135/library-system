@@ -4,12 +4,14 @@
 
 
 let listaLivros = []
+let listaDeAdmins = []
 let listaDeUsuarios = []
 let livrosDisponiveis = []
 let livrosIndisponiveis = []
-let emprestimosEmAndamento = []
 let emprestimosEmDebito = []
 let historicoEmprestimos = []
+let emprestimosEmAndamento = []
+
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -31,6 +33,9 @@ window.onload = function() { // função que ocorre na hora que recarrega o site
     console.log(emprestimosEmAndamento)
     emprestimosEmDebito = JSON.parse(localStorage.getItem("emprestimosEmDebito")) || []//JSON.parse convete uma string JSON em objeto JavaScript
     console.log(emprestimosEmDebito)
+    historicoEmprestimos = JSON.parse(localStorage.getItem("historicoEmprestimos")) || []
+    console.log(historicoEmprestimos)
+    listaDeAdmins = JSON.parse(localStorage.getItem("listaDeAdmins")) || []
 
 
 
@@ -60,14 +65,14 @@ window.onload = function() { // função que ocorre na hora que recarrega o site
             let dataEmprestimo = emprestimo.dataEmprestimo
             let nome = emprestimo.nome
             let email = emprestimo.email
-            let telefone = emprestimo.telefone
+            let cpf = emprestimo.cpf
         
 
             // Calcula a multa
             const multa = (diferencaDias - 7) * 1; // 1 real por dia após 7 dias
 
             
-            let usuarioDebitoObj = {nome: nome, email: email, telefone: telefone, livro: tituloLivro, dataEmprestimo: dataEmprestimo, multa: multa}
+            let usuarioDebitoObj = {nome: nome, email: email, cpf: cpf, livro: tituloLivro, dataEmprestimo: dataEmprestimo, multa: multa}
             emprestimosEmDebito.push(usuarioDebitoObj)
             emprestimosParaRemover.push(emprestimo)
             }
@@ -83,7 +88,14 @@ window.onload = function() { // função que ocorre na hora que recarrega o site
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-// FILTRAR ARRAY
+// FUNÇÕES DE MANIPULAÇÃO 
+
+
+function removerAcentos(texto) {
+    return texto
+        .normalize('NFD') // Normaliza para a forma de decomposição
+        .replace(/[\u0300-\u036f]/g, ''); // Remove os acentos
+}
 
 
 function filtrarArray(array1, array2){
@@ -101,19 +113,52 @@ function filtrarArray(array1, array2){
 
 
 function limparListaDeUsuarios() {
-    localStorage.removeItem("listaDeUsuarios")
-    localStorage.removeItem("emprestimosEmAndamento")
-    localStorage.removeItem("emprestimosEmDebito")
-    alert("Lista de Usuários Vazia!")
+    
+    let senhaDigitada = document.getElementById("conferirSenha")
+    let senhaIndex = listaDeAdmins.findIndex(admins => admins.senha === senhaDigitada)
+
+    if(senhaIndex !== -1){
+        localStorage.removeItem("listaDeUsuarios")
+        localStorage.removeItem("emprestimosEmAndamento")
+        localStorage.removeItem("emprestimosEmDebito")
+        alert("Lista de Usuários Vazia!")
+    }else{
+        alert("Senha Incorreta!")
+    }
 }
 
 function limparListaLivros() {
-    localStorage.removeItem("listaLivros")
-    localStorage.removeItem("livrosDisponiveis")
-    localStorage.removeItem("livrosIndisponiveis")
-    localStorage.removeItem("emprestimosEmAndamento")
-    localStorage.removeItem("emprestimosEmDebito")
-    alert("Lista de Livros Vazia!")
+
+    let senhaDigitada = document.getElementById("conferirSenha")
+    let senhaIndex = listaDeAdmins.findIndex(admins => admins.senha === senhaDigitada)
+
+    if(senhaIndex !== -1){
+        localStorage.removeItem("listaLivros")
+        localStorage.removeItem("livrosDisponiveis")
+        localStorage.removeItem("livrosIndisponiveis")
+        localStorage.removeItem("emprestimosEmAndamento")
+        localStorage.removeItem("emprestimosEmDebito")
+        alert("Lista de Usuários Vazia!")
+    }else{
+        alert("Senha Incorreta!")
+    }
+}
+
+function limparListaEmprestimos() {
+
+    let senhaDigitada = document.getElementById("conferirSenha")
+    let senhaIndex = listaDeAdmins.findIndex(admins => admins.senha === senhaDigitada)
+
+    if(senhaIndex !== -1){
+        livrosDisponiveis.push(...livrosIndisponiveis)
+        localStorage.removeItem("emprestimosEmAndamento")
+        localStorage.removeItem("emprestimosEmDebito")
+        localStorage.removeItem("historicoEmprestimos")
+        localStorage.removeItem("livrosIndisponiveis")
+        alert("Lista Emprestimos Vazio!")
+    }else{
+        alert("Senha Incorreta!")
+    }
 }
 
 
@@ -127,27 +172,55 @@ function cadastrarLivros(event){
     event.preventDefault()
 
     let tituloLivro = document.getElementById("titulo").value //vai armazenar o dado digitado (vai manipular os dados do ID no HTML)
+    tituloLivro = removerAcentos(tituloLivro.toLowerCase())
     let autor = document.getElementById("autor").value
     let ano = document.getElementById("ano").value
     console.log(`Título: ${tituloLivro}, Autor: ${autor}, Ano: ${ano}`)
 
     let livroObj = {titulo: tituloLivro, autor: autor, anoPublicacao: ano}// cria um obj com as propiedades digitadas
-    let livroIndex = listaLivros.findIndex(livro => livro.titulo.toLowerCase() === tituloLivro.toLowerCase())
+    let livroIndex = listaLivros.findIndex(
+        livro => removerAcentos(livro.titulo.toLowerCase()) === tituloLivro.toLowerCase()
+    )
 
-    if(livroIndex == -1){ // vai ler o .finIndex e ser for true ele retorna um valor diferente de -1
-        listaLivros.push(livroObj)
-        livrosDisponiveis.push(livroObj)
-        listaLivros.sort((a, b) => a.titulo.localeCompare(b.titulo))
-        localStorage.setItem("livrosDisponiveis", JSON.stringify(livrosDisponiveis))// salva os dados na maquina podendo fechar pagina
-        localStorage.setItem("listaLivros", JSON.stringify(listaLivros))// salva os dados na maquina podendo fechar pagina
+    if(listaDeAdmins.length>0){
+        if(livroIndex == -1){ // vai ler o .finIndex e ser for true ele retorna um valor diferente de -1
+            listaLivros.push(livroObj)
+            livrosDisponiveis.push(livroObj)
+            listaLivros.sort((a, b) => a.titulo.localeCompare(b.titulo))
+            localStorage.setItem("livrosDisponiveis", JSON.stringify(livrosDisponiveis))// salva os dados na maquina podendo fechar pagina
+            localStorage.setItem("listaLivros", JSON.stringify(listaLivros))// salva os dados na maquina podendo fechar pagina
 
 
-         emprestimosEmAndamento
-        alert("Livro Cadastrado!")
+            emprestimosEmAndamento
+            alert("Livro Cadastrado!")
+        }else{
+            alert("Livro já está cadastrado!")
+        }
     }else{
-        alert("Livro já está cadastrado!")
+        alert("Erro: Nenhum Adm Cadastrado.")
     }
 }
+
+function cadastrarAdmin(event){
+
+    event.preventDefault()
+
+    let usuario = document.getElementById("usuario").value //vai armazenar o dado digitado
+    let senha = document.getElementById("senha").value
+    let cpf = document.getElementById("cpf").value
+    let dadosAdminObj = {nome: usuario, senha: senha, cpf: cpf} // cria um obj com as propiedades digitadas
+    let dadosAdminIndex = listaDeAdmins.findIndex(user => user.cpf === cpf)
+
+    if (dadosAdminIndex == -1){ // vai ler o .finIndex e ser for true ele retorna um valor diferente de -1
+    listaDeAdmins.push(dadosAdminObj)
+    listaDeAdmins.sort((a, b) => a.nome.localeCompare(b.nome))
+    localStorage.setItem("listaDeAdmins", JSON.stringify(listaDeAdmins)) // converte o objeto em string JSON e salva no storage (o que está dentro das aspas é a chave da lista)
+    alert("Cadastro concluído")
+    }else{
+        alert("Administrador já está cadastrado")
+    }
+}
+
 
 function cadastrarUsuarios(event){
 
@@ -155,17 +228,22 @@ function cadastrarUsuarios(event){
 
     let usuario = document.getElementById("usuario").value //vai armazenar o dado digitado
     let email = document.getElementById("email").value
-    let telefone = document.getElementById("telefone").value
-    let dadosUsuarioObj = {nome: usuario, email: email, telefone: telefone} // cria um obj com as propiedades digitadas
-    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.email.toLowerCase() === email.toLowerCase())
+    let cpf = document.getElementById("cpf").value
+    let dadosUsuarioObj = {nome: usuario, email: email, cpf: cpf} // cria um obj com as propiedades digitadas
+    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.cpf === cpf)
 
-    if (dadosUsuarioIndex == -1){ // vai ler o .finIndex e ser for true ele retorna um valor diferente de -1
-    listaDeUsuarios.push(dadosUsuarioObj)
-    listaDeUsuarios.sort((a, b) => a.nome.localeCompare(b.nome))
-    localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios)) // converte o objeto em string JSON e salva no storage (o que está dentro das aspas é a chave da lista)
-    alert("Cadastro concluído")
+
+    if(listaDeAdmins.length>0){
+        if (dadosUsuarioIndex == -1){ // vai ler o .finIndex e ser for true ele retorna um valor diferente de -1
+        listaDeUsuarios.push(dadosUsuarioObj)
+        listaDeUsuarios.sort((a, b) => a.nome.localeCompare(b.nome))
+        localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios)) // converte o objeto em string JSON e salva no storage (o que está dentro das aspas é a chave da lista)
+        alert("Cadastro concluído")
+        }else{
+            alert("Usuário já está cadastrado")
+        }
     }else{
-        alert("Usuário já está cadastrado")
+        alert("Erro: Nenhum Adm Cadastrado.")
     }
 }
 
@@ -173,34 +251,41 @@ function retirarCadastro(event){
 
     event.preventDefault()
 
-    let retirarUsuario = document.getElementById("retirarUsuario").value
-    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.email.toLowerCase() === retirarUsuario.toLowerCase())
+    let retirarUsuario = document.getElementById("cpf").value
+    let senhaAdmin = document.getElementById("senhaAdm").value
+    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.cpf === retirarUsuario)
+    let dadosSenhaAdmIndex = listaDeAdmins.findIndex(admin => admin.senha === senhaAdmin)
 
-    
-    if(dadosUsuarioIndex !== -1){
-        listaDeUsuarios.splice(dadosUsuarioIndex, 1)
-        alert("Usuário retirado com sucesso!")
-        localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios))
-        let dadosEmprestimoIndex = emprestimosEmAndamento.findIndex(user => user.email.toLowerCase() === retirarUsuario.toLowerCase())
-        localStorage.setItem("livrosIndisponiveis", JSON.stringify(livrosIndisponiveis))
-
-
-        if (dadosEmprestimoIndex !== -1){
-        emprestimosEmAndamento.splice(dadosEmprestimoIndex, 1)
-        localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))
-        alert("Usuário retirado de emprestimos em andamento com sucesso!")
+    if(listaDeAdmins.length>0){
+        if(dadosUsuarioIndex !== -1 && dadosSenhaAdmIndex !== -1){
+            listaDeUsuarios.splice(dadosUsuarioIndex, 1)
+            listaDeAdmins.splice(dadosSenhaAdmIndex, 1)
+            alert("Usuário retirado com sucesso!")
+            localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios))
+            localStorage.setItem("listaDeAdmins", JSON.stringify(listaDeAdmins))
+            let dadosEmprestimoIndex = emprestimosEmAndamento.findIndex(user => user.cpf === retirarUsuario)
+            localStorage.setItem("livrosIndisponiveis", JSON.stringify(livrosIndisponiveis))
 
 
-        }else{
-            let dadosEmprestimoDebitoIndex = emprestimosEmDebito.findIndex(user => user.email.toLowerCase() === retirarUsuario.toLowerCase())
-            if (dadosEmprestimoDebitoIndex !== -1){
-                emprestimosEmDebito.splice(dadosEmprestimoDebitoIndex, 1)
-                localStorage.setItem("emprestimoEmDebito", JSON.stringify(emprestimosEmDebito))
-                alert("Usuário retirado de emprestimos em débito com sucesso!")
+            if (dadosEmprestimoIndex !== -1){
+            emprestimosEmAndamento.splice(dadosEmprestimoIndex, 1)
+            localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))
+            alert("Usuário retirado de emprestimos em andamento com sucesso!")
+
+
+            }else{
+                let dadosEmprestimoDebitoIndex = emprestimosEmDebito.findIndex(user => user.cpf === retirarUsuario)
+                if (dadosEmprestimoDebitoIndex !== -1){
+                    emprestimosEmDebito.splice(dadosEmprestimoDebitoIndex, 1)
+                    localStorage.setItem("emprestimoEmDebito", JSON.stringify(emprestimosEmDebito))
+                    alert("Usuário retirado de emprestimos em débito com sucesso!")
+                }
             }
+        }else{
+            alert("Usuário não existe!")
         }
     }else{
-        alert("Usuário não existe!")
+        alert("Erro: Nenhum Adm Cadastrado.")
     }
 }
 
@@ -208,39 +293,43 @@ function cadastrarEmprestimos(event){//troquei usuario por email - pode dar erra
 
     event.preventDefault()
 
-    let emailUsuario = document.getElementById("emailUsuario").value
-    let usuario = listaDeUsuarios.find(user => user.email === emailUsuario)//o .find vai retornar o item para variavel usuario
+    let cpfUsuario = document.getElementById("cpfUsuario").value
+    let usuario = listaDeUsuarios.find(user => user.cpf === cpfUsuario)//o .find vai retornar o item para variavel usuario
 
+    if(listaDeAdmins.length>0){
+        if(usuario) { //esse if só vai entrar se o usuário for encontrado(o resultado do .find for === true).
+            let tituloLivro = document.getElementById("tituloLivro").value
+            tituloLivro = removerAcentos(tituloLivro.toLowerCase())
+            let livroIndex = livrosDisponiveis.findIndex(livro => livro.titulo.toLowerCase() === tituloLivro.toLowerCase())// nem precisa conferir dnv mas pra n dar erro ta ai
 
-    if(usuario) { //esse if só vai entrar se o usuário for encontrado(o resultado do .find for === true).
-        let tituloLivro = document.getElementById("tituloLivro").value
-        let livroIndex = livrosDisponiveis.findIndex(livro => livro.titulo.toLowerCase() === tituloLivro.toLowerCase())
-
-        if(livroIndex !== -1) { // se o resultdo do findIndex for diferente de -1 ele entra(se o findIndex for true ele sempre retorno um numero diferente de -1)
+            if(livroIndex !== -1) { // se o resultado do findIndex for diferente de -1 ele entra(se o findIndex for true ele sempre retorno um numero diferente de -1)
             
-            let dataEmprestimo = document.getElementById("dataEmprestimo").value
-            let emprestimo = {...usuario, titulo: tituloLivro, dataEmprestimo: dataEmprestimo}
-            emprestimosEmAndamento.push(emprestimo)
-            emprestimosEmAndamento.sort((a, b) => a.nome.localeCompare(b.nome))
-            let colocarLivroInd = livrosDisponiveis[livroIndex]
-            livrosDisponiveis.splice(livroIndex, 1)  // Remove o livro da lista de livros disponíveis
-            livrosDisponiveis.sort((a, b) => a.titulo.localeCompare(b.titulo))
+                let dataEmprestimo = document.getElementById("dataEmprestimo").value
+                let emprestimo = {...usuario, titulo: tituloLivro, dataEmprestimo: dataEmprestimo}
+                emprestimosEmAndamento.push(emprestimo)
+                emprestimosEmAndamento.sort((a, b) => a.nome.localeCompare(b.nome))
+                let colocarLivroInd = livrosDisponiveis[livroIndex]
+                livrosDisponiveis.splice(livroIndex, 1)  // Remove o livro da lista de livros disponíveis
+                livrosDisponiveis.sort((a, b) => a.titulo.localeCompare(b.titulo))
             
-            localStorage.setItem("livrosDisponiveis", JSON.stringify(livrosDisponiveis))// converte o objeto em string JSON e salva no storage
+                localStorage.setItem("livrosDisponiveis", JSON.stringify(livrosDisponiveis))// converte o objeto em string JSON e salva no storage
             
-            emprestimosEmDebito.splice(livroIndex, 1)
-            livrosIndisponiveis.push(colocarLivroInd)
-            livrosIndisponiveis.sort((a, b) => a.titulo.localeCompare(b.titulo))
+                emprestimosEmDebito.splice(livroIndex, 1)
+                livrosIndisponiveis.push(colocarLivroInd)
+                livrosIndisponiveis.sort((a, b) => a.titulo.localeCompare(b.titulo))
 
-            localStorage.setItem("livrosIndisponiveis", JSON.stringify(livrosIndisponiveis))// converte o objeto em string JSON e salva no storage
-            localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))// converte o objeto em string JSON e salva no storage
+                localStorage.setItem("livrosIndisponiveis", JSON.stringify(livrosIndisponiveis))// converte o objeto em string JSON e salva no storage
+                localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))// converte o objeto em string JSON e salva no storage
 
-            alert("Empréstimo registrado com sucesso!")
+                alert("Empréstimo registrado com sucesso!")
+            } else {
+                alert("Livro indisponível!")
+            }
         } else {
-            alert("Livro indisponível!")
+            alert("Usuário não encontrado!")
         }
-    } else {
-        alert("Usuário não encontrado!")
+    }else{
+        alert("Erro: Nenhum Adm Cadastrado.")
     }
 }
 
@@ -249,48 +338,50 @@ function cadastrarDevolucoes(event){
     event.preventDefault()
 
     let tituloLivro = document.getElementById("tituloLivroDevolucao").value
+    tituloLivro - removerAcentos(tituloLivro)
     let livroIndex = livrosIndisponiveis.findIndex(livro => livro.titulo === tituloLivro) 
 
-    if(livroIndex !== -1) {
-        let colocarLivroDisp = livrosIndisponiveis[livroIndex]
-        livrosIndisponiveis.splice(livroIndex, 1)  // Remove o livro da lista de livros indisponíveis
-        localStorage.setItem("livrosIndisponiveis", JSON.stringify(livrosIndisponiveis))// converte o objeto em string JSON e salva no storage
+    if(listaDeAdmins.length>0){
+        if(livroIndex !== -1) {
+            let colocarLivroDisp = livrosIndisponiveis[livroIndex]
+            livrosIndisponiveis.splice(livroIndex, 1)  // Remove o livro da lista de livros indisponíveis
+            localStorage.setItem("livrosIndisponiveis", JSON.stringify(livrosIndisponiveis))// converte o objeto em string JSON e salva no storage
 
-        livrosDisponiveis.push(colocarLivroDisp)
-        localStorage.setItem("livrosDisponiveis", JSON.stringify(livrosDisponiveis))// converte o objeto em string JSON e salva no storage
+            livrosDisponiveis.push(colocarLivroDisp)
+            localStorage.setItem("livrosDisponiveis", JSON.stringify(livrosDisponiveis))// converte o objeto em string JSON e salva no storage
 
-        let emprestimoIndex = emprestimosEmAndamento.findIndex(emprestimo => emprestimo.titulo.toLowerCase() === tituloLivro.toLowerCase())
+            let emprestimoIndex = emprestimosEmAndamento.findIndex(emprestimo => emprestimo.titulo.toLowerCase() === tituloLivro.toLowerCase())
 
-        historicoEmprestimos.push(emprestimosEmAndamento[emprestimoIndex])
-        localStorage.setItem("historicoEmprestimos", JSON.stringify(historicoEmprestimos))
+            historicoEmprestimos.push(emprestimosEmAndamento[emprestimoIndex])
+            localStorage.setItem("historicoEmprestimos", JSON.stringify(historicoEmprestimos))
 
-        if(emprestimoIndex !== -1) {    
-            let emprestimoObj = emprestimosEmAndamento[emprestimoIndex]
-            let dataEmprestimo = new Date(emprestimoObj.dataEmprestimo)
-            let dataDevolucao = new Date()
+            if(emprestimoIndex !== -1) {    
+                let emprestimoObj = emprestimosEmAndamento[emprestimoIndex]
+                let dataEmprestimo = new Date(emprestimoObj.dataEmprestimo)
+                let dataDevolucao = new Date()
 
-            /*A subtração entre duas as  datas retorna a diferença em milissegundos.
-            Multiplicamos 1000 milissegundos (1 segundo) por 60 (1 minuto) por 60 (1 hora) por 24 (1 dia) para obter o número de milissegundos em um dia.
-            logo após arredonda para baixo (math.floor)*/
-            let diferencaDias = Math.floor((dataDevolucao - dataEmprestimo) / (1000 * 60 * 60 * 24)) 
+                /*A subtração entre duas as  datas retorna a diferença em milissegundos.
+                Multiplicamos 1000 milissegundos (1 segundo) por 60 (1 minuto) por 60 (1 hora) por 24 (1 dia) para obter o número de milissegundos em um dia.
+                logo após arredonda para baixo (math.floor)*/
+                let diferencaDias = Math.floor((dataDevolucao - dataEmprestimo) / (1000 * 60 * 60 * 24)) 
             
 
-            /* o (?) significa if e o (:) siginifica else
-            se diferencaDias for maior que 7 -> multa = (diferencaDias - 7) * 1 . senão -> multa = 0 */
-            let multa = diferencaDias > 7 ? (diferencaDias - 7) * 1 : 0
-            if (multa > 0) {
-                localStorage.removeItem("emprestimosEmDebito")
-                emprestimosEmAndamento.splice(emprestimoIndex, 1)
-                alert(`Devolução registrada com sucesso! Usuário deve pagar uma multa de R$ ${multa}.`)       
-            } else {
-                emprestimosEmAndamento.splice(emprestimoIndex, 1)
-                alert("Devolução registrada com sucesso! Nenhuma multa aplicada.")
+                /* o (?) significa if e o (:) siginifica else
+                se diferencaDias for maior que 7 -> multa = (diferencaDias - 7) * 1 . senão -> multa = 0 */
+                let multa = diferencaDias > 7 ? (diferencaDias - 7) * 1 : 0
+                if (multa > 0) {//delete estava aqui
+                    emprestimosEmAndamento.splice(emprestimoIndex, 1)
+                    alert(`Devolução registrada com sucesso! Usuário deve pagar uma multa de R$ ${multa}.`)       
+                } else {
+                    emprestimosEmAndamento.splice(emprestimoIndex, 1)
+                    alert("Devolução registrada com sucesso! Nenhuma multa aplicada.")
+                }
+                localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))// converte o objeto em string JSON e salva no storage
+                localStorage.setItem("emprestimosEmDebito", JSON.stringify(emprestimosEmDebito))// converte o objeto em string JSON e salva no storage
             }
-            localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))// converte o objeto em string JSON e salva no storage
-            localStorage.setItem("emprestimosEmDebito", JSON.stringify(emprestimosEmDebito))// converte o objeto em string JSON e salva no storage
+        }else{
+            alert("Livro não encontrado na lista de indisponíveis!")
         }
-    }else{
-        alert("Livro não encontrado na lista de indisponíveis!")
     }
 }
 
@@ -308,7 +399,7 @@ function barraDePesquisa() {
         return
     }
 
-    let pesquisaTermo = inputElement.value.toLowerCase()
+    let pesquisaTermo = removerAcentos(inputElement.value.toLowerCase())
     
     if(tipoPesquisa === "livros"){
     
@@ -370,7 +461,7 @@ function exibirUsuarios(){
         lista.innerHTML = ""
         listaDeUsuarios.forEach(function(usuario) {
             let item = document.createElement("li")
-            item.textContent = `Nome: ${usuario.nome} Email: ${usuario.email} Telefone: ${usuario.telefone} `
+            item.textContent = `Nome: ${usuario.nome} Email: ${usuario.email} Telefone: ${usuario.cpf} `
             lista.appendChild(item)
         })
     } else {
@@ -405,6 +496,21 @@ function exibirLivrosIndisponiveis(){
     console.error("Nenhum livro indisponível encontrado.");
     }
 }
+
+function exibirHistoricoEmprestimos(){
+    if (historicoEmprestimos && Array.isArray(historicoEmprestimos)) {
+        let lista = document.getElementById("exibirHistEmpBtn")
+        lista.innerHTML = ""
+        historicoEmprestimos.forEach(function(emprestimo) {
+            let item = document.createElement("li")
+            item.textContent = `Nome: ${emprestimo.nome} Livro: ${emprestimo.titulo} Data Locação: ${emprestimo.dataEmprestimo}`
+            lista.appendChild(item)
+        })
+    } else {
+    console.error('Historico Vazio.');
+    }
+}
+
 
 function exibirEmprestimosAtivos(){
     if (emprestimosEmAndamento && Array.isArray(emprestimosEmAndamento)) {

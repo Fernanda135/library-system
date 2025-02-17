@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retirar Cadastro de Livros</title>
+    <title>Limpar Lista</title>
     <link rel="stylesheet" href="../css/styleUser.css">
 </head>
 <body>
@@ -17,17 +17,13 @@
     <div class="container">
         <form class="box">
             <div>
-                <p>RETIRAR CADASTRO</p>
+                <p>LIMPAR LISTA</p>
             </div>
             <div class="input-group">
-                <label for="cpf">CPF</label>
-                <input type="number" id="cpf" placeholder="Insira o cpf do usuário" required autocomplete="off">
+                <label for="conferirSenha">Senha</label>
+                <input id="conferirSenha" type="text" placeholder="Insira a senha" required autocomplete="off">
             </div>
-            <div class="input-group">
-                <label for="senhaAdm">Senha</label>
-                <input type="text" id="senhaAdm" placeholder="Insira a senha do admin" required autocomplete="off">
-            </div>
-            <button onclick="retirarCadastro(event)" type="submit">ENVIAR</button>
+            <button onclick="limparListaEmprestimos()" type="submit">ENVIAR</button>
         </form>
     </div>
     <script src="../script.js"></script>
