@@ -248,42 +248,6 @@ function cadastrarUsuarios(event){
     }
 }
 
-function retirarCadastro(event){
-
-    event.preventDefault()
-
-    let retirarUsuario = document.getElementById("cpf").value
-    let senhaAdmin = document.getElementById("senhaAdm").value
-    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.cpf === retirarUsuario)
-    let dadosSenhaAdmIndex = listaDeAdmins.findIndex(admin => admin.senha === senhaAdmin)
-    let dadosCpfAdmIndex = listaDeAdmins.findIndex(admin => admin.cpf === retirarUsuario)
-
-    if(listaDeAdmins.length>0){
-
-        let dadosEmprestimoIndex = emprestimosEmAndamento.findIndex(user => user.cpf === retirarUsuario)
-        if (dadosEmprestimoIndex == -1){// se não estiver com emprestimo
-            
-            if(dadosUsuarioIndex !== -1 || dadosCpfAdmIndex !== -1){ //se achar o usuário ou admin
-                if(dadosUsuarioIndex !== -1 && dadosSenhaAdmIndex !== -1){// se a senha estiver correta e o cpf for do usuario
-                    listaDeUsuarios.splice(dadosUsuarioIndex, 1)
-                    localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios))
-                    alert("Cadastro de Usuário Retirado Com Sucesso!")
-                }
-                    
-                if(dadosCpfAdmIndex !== -1 && dadosSenhaAdmIndex !== -1){//se a senha estiver correta e se o cpf digitado for igual a um cpf de admin ele apaga
-                    listaDeAdmins.splice(dadosSenhaAdmIndex, 1)
-                    localStorage.setItem("listaDeAdmins", JSON.stringify(listaDeAdmins))
-                    alert("Cadastro de Administrador Retirado Com Sucesso!")
-                }                           
-            }else{
-                alert("Usuário não encontrado.")
-            }
-        }else{
-            alert("Erro: Usuário ainda está em um emprestimo.")
-        }
-    }
-}
-
 function cadastrarEmprestimos(event){//troquei usuario por email - pode dar errado
 
     event.preventDefault()
@@ -376,6 +340,47 @@ function cadastrarDevolucoes(event){
             }
         }else{
             alert("Livro não encontrado na lista de indisponíveis!")
+        }
+    }
+}
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+// RETIRAR CADASTRO
+
+function retirarCadastro(event){
+
+    event.preventDefault()
+
+    let retirarUsuario = document.getElementById("cpf").value
+    let senhaAdmin = document.getElementById("senhaAdm").value
+    let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.cpf === retirarUsuario)
+    let dadosSenhaAdmIndex = listaDeAdmins.findIndex(admin => admin.senha === senhaAdmin)
+    let dadosCpfAdmIndex = listaDeAdmins.findIndex(admin => admin.cpf === retirarUsuario)
+
+    if(listaDeAdmins.length>0){
+
+        let dadosEmprestimoIndex = emprestimosEmAndamento.findIndex(user => user.cpf === retirarUsuario)
+        if (dadosEmprestimoIndex == -1){// se não estiver com emprestimo
+            
+            if(dadosUsuarioIndex !== -1 || dadosCpfAdmIndex !== -1){ //se achar o usuário ou admin
+                if(dadosUsuarioIndex !== -1 && dadosSenhaAdmIndex !== -1){// se a senha estiver correta e o cpf for do usuario
+                    listaDeUsuarios.splice(dadosUsuarioIndex, 1)
+                    localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios))
+                    alert("Cadastro de Usuário Retirado Com Sucesso!")
+                }
+                    
+                if(dadosCpfAdmIndex !== -1 && dadosSenhaAdmIndex !== -1){//se a senha estiver correta e se o cpf digitado for igual a um cpf de admin ele apaga
+                    listaDeAdmins.splice(dadosSenhaAdmIndex, 1)
+                    localStorage.setItem("listaDeAdmins", JSON.stringify(listaDeAdmins))
+                    alert("Cadastro de Administrador Retirado Com Sucesso!")
+                }                           
+            }else{
+                alert("Usuário não encontrado.")
+            }
+        }else{
+            alert("Erro: Usuário ainda está em um emprestimo.")
         }
     }
 }
