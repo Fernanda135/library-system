@@ -22,20 +22,21 @@ let emprestimosEmAndamento = []
 window.onload = function() { // função que ocorre na hora que recarrega o site, ela vai estar armazenando cada array
     
     listaLivros = JSON.parse(localStorage.getItem("listaLivros")) || []
-    console.log(listaLivros)
+    console.log("listaLivros", listaLivros)
     listaDeUsuarios = JSON.parse(localStorage.getItem("listaDeUsuarios")) || []
-    console.log(listaDeUsuarios)
+    console.log("listaUsuarios",listaDeUsuarios)
     livrosDisponiveis = JSON.parse(localStorage.getItem("livrosDisponiveis")) || []
-    console.log(livrosDisponiveis)
+    console.log("livrosDisponiveis",livrosDisponiveis)
     livrosIndisponiveis = JSON.parse(localStorage.getItem("livrosIndisponiveis")) || []
-    console.log(livrosIndisponiveis)
+    console.log("livrosIndisponiveis",livrosIndisponiveis)
     emprestimosEmAndamento = JSON.parse(localStorage.getItem("emprestimosEmAndamento")) || []
-    console.log(emprestimosEmAndamento)
+    console.log("emprestimosEmAndamento",emprestimosEmAndamento)
     emprestimosEmDebito = JSON.parse(localStorage.getItem("emprestimosEmDebito")) || []//JSON.parse convete uma string JSON em objeto JavaScript
-    console.log(emprestimosEmDebito)
+    console.log("emprestimosEmDebito",emprestimosEmDebito)
     historicoEmprestimos = JSON.parse(localStorage.getItem("historicoEmprestimos")) || []
-    console.log(historicoEmprestimos)
+    console.log("historicoEmprestimos",historicoEmprestimos)
     listaDeAdmins = JSON.parse(localStorage.getItem("listaDeAdmins")) || []
+    console.log("listaAdmins",listaDeAdmins)
 
 
 
@@ -114,7 +115,7 @@ function filtrarArray(array1, array2){
 
 function limparListaDeUsuarios() {
     
-    let senhaDigitada = document.getElementById("conferirSenha")
+    let senhaDigitada = document.getElementById("conferirSenha").value
     let senhaIndex = listaDeAdmins.findIndex(admins => admins.senha === senhaDigitada)
 
     if(senhaIndex !== -1){
@@ -129,7 +130,7 @@ function limparListaDeUsuarios() {
 
 function limparListaLivros() {
 
-    let senhaDigitada = document.getElementById("conferirSenha")
+    let senhaDigitada = document.getElementById("conferirSenha").value
     let senhaIndex = listaDeAdmins.findIndex(admins => admins.senha === senhaDigitada)
 
     if(senhaIndex !== -1){
@@ -138,7 +139,7 @@ function limparListaLivros() {
         localStorage.removeItem("livrosIndisponiveis")
         localStorage.removeItem("emprestimosEmAndamento")
         localStorage.removeItem("emprestimosEmDebito")
-        alert("Lista de Usuários Vazia!")
+        alert("Lista de Livros Vazia!")
     }else{
         alert("Senha Incorreta!")
     }
@@ -146,7 +147,7 @@ function limparListaLivros() {
 
 function limparListaEmprestimos() {
 
-    let senhaDigitada = document.getElementById("conferirSenha")
+    let senhaDigitada = document.getElementById("conferirSenha").value
     let senhaIndex = listaDeAdmins.findIndex(admins => admins.senha === senhaDigitada)
 
     if(senhaIndex !== -1){
@@ -155,7 +156,7 @@ function limparListaEmprestimos() {
         localStorage.removeItem("emprestimosEmDebito")
         localStorage.removeItem("historicoEmprestimos")
         localStorage.removeItem("livrosIndisponiveis")
-        alert("Lista Emprestimos Vazio!")
+        alert("Lista Emprestimos Vazia!")
     }else{
         alert("Senha Incorreta!")
     }
@@ -255,37 +256,31 @@ function retirarCadastro(event){
     let senhaAdmin = document.getElementById("senhaAdm").value
     let dadosUsuarioIndex = listaDeUsuarios.findIndex(user => user.cpf === retirarUsuario)
     let dadosSenhaAdmIndex = listaDeAdmins.findIndex(admin => admin.senha === senhaAdmin)
+    let dadosCpfAdmIndex = listaDeAdmins.findIndex(admin => admin.cpf === retirarUsuario)
 
     if(listaDeAdmins.length>0){
-        if(dadosUsuarioIndex !== -1 && dadosSenhaAdmIndex !== -1){
-            listaDeUsuarios.splice(dadosUsuarioIndex, 1)
-            listaDeAdmins.splice(dadosSenhaAdmIndex, 1)
-            alert("Usuário retirado com sucesso!")
-            localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios))
-            localStorage.setItem("listaDeAdmins", JSON.stringify(listaDeAdmins))
-            let dadosEmprestimoIndex = emprestimosEmAndamento.findIndex(user => user.cpf === retirarUsuario)
-            localStorage.setItem("livrosIndisponiveis", JSON.stringify(livrosIndisponiveis))
 
-
-            if (dadosEmprestimoIndex !== -1){
-            emprestimosEmAndamento.splice(dadosEmprestimoIndex, 1)
-            localStorage.setItem("emprestimosEmAndamento", JSON.stringify(emprestimosEmAndamento))
-            alert("Usuário retirado de emprestimos em andamento com sucesso!")
-
-
-            }else{
-                let dadosEmprestimoDebitoIndex = emprestimosEmDebito.findIndex(user => user.cpf === retirarUsuario)
-                if (dadosEmprestimoDebitoIndex !== -1){
-                    emprestimosEmDebito.splice(dadosEmprestimoDebitoIndex, 1)
-                    localStorage.setItem("emprestimoEmDebito", JSON.stringify(emprestimosEmDebito))
-                    alert("Usuário retirado de emprestimos em débito com sucesso!")
+        let dadosEmprestimoIndex = emprestimosEmAndamento.findIndex(user => user.cpf === retirarUsuario)
+        if (dadosEmprestimoIndex == -1){// se não estiver com emprestimo
+            
+            if(dadosUsuarioIndex !== -1 || dadosCpfAdmIndex !== -1){ //se achar o usuário ou admin
+                if(dadosUsuarioIndex !== -1 && dadosSenhaAdmIndex !== -1){// se a senha estiver correta e o cpf for do usuario
+                    listaDeUsuarios.splice(dadosUsuarioIndex, 1)
+                    localStorage.setItem("listaDeUsuarios", JSON.stringify(listaDeUsuarios))
+                    alert("Cadastro de Usuário Retirado Com Sucesso!")
                 }
+                    
+                if(dadosCpfAdmIndex !== -1 && dadosSenhaAdmIndex !== -1){//se a senha estiver correta e se o cpf digitado for igual a um cpf de admin ele apaga
+                    listaDeAdmins.splice(dadosSenhaAdmIndex, 1)
+                    localStorage.setItem("listaDeAdmins", JSON.stringify(listaDeAdmins))
+                    alert("Cadastro de Administrador Retirado Com Sucesso!")
+                }                           
+            }else{
+                alert("Usuário não encontrado.")
             }
         }else{
-            alert("Usuário não existe!")
+            alert("Erro: Usuário ainda está em um emprestimo.")
         }
-    }else{
-        alert("Erro: Nenhum Adm Cadastrado.")
     }
 }
 
@@ -338,7 +333,7 @@ function cadastrarDevolucoes(event){
     event.preventDefault()
 
     let tituloLivro = document.getElementById("tituloLivroDevolucao").value
-    tituloLivro - removerAcentos(tituloLivro)
+    tituloLivro = removerAcentos(tituloLivro.toLowerCase())
     let livroIndex = livrosIndisponiveis.findIndex(livro => livro.titulo === tituloLivro) 
 
     if(listaDeAdmins.length>0){
@@ -350,7 +345,7 @@ function cadastrarDevolucoes(event){
             livrosDisponiveis.push(colocarLivroDisp)
             localStorage.setItem("livrosDisponiveis", JSON.stringify(livrosDisponiveis))// converte o objeto em string JSON e salva no storage
 
-            let emprestimoIndex = emprestimosEmAndamento.findIndex(emprestimo => emprestimo.titulo.toLowerCase() === tituloLivro.toLowerCase())
+            let emprestimoIndex = emprestimosEmAndamento.findIndex(emprestimo => emprestimo.titulo.toLowerCase() === tituloLivro)
 
             historicoEmprestimos.push(emprestimosEmAndamento[emprestimoIndex])
             localStorage.setItem("historicoEmprestimos", JSON.stringify(historicoEmprestimos))
