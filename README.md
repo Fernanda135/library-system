@@ -5,8 +5,8 @@ Este sistema organizacional de bibliotecas foi desenvolvido por Thiago Novaes e 
 | Funcionalidade            | Descrição                                                                 |
 |---------------------------|---------------------------------------------------------------------------|
 | 👤 Cadastro de Usuários    | Criar, editar, listar e remover perfis de leitores ou funcionários.       |
-| 📚 Cadastro de Livros      | Adicionar livros, editar informações, listar por categoria ou autor.      |
-| 🔍 Busca Inteligente       | Procurar livros ou usuários por nome, ID, título ou palavra-chave.        |
+| 📚 Cadastro de Livros      | Adicionar livros, editar informações e listar livros cadastrados.      |
+| 🔍 Busca Inteligente       | Procurar livros ou usuários por nome, título.        |
 | 📖 Controle de Empréstimos | Registrar empréstimos e devoluções com controle de datas e penalidades.  |
 | 🧮 Cálculo de Tarifas      | Gerar tarifas automaticamente com base em atrasos ou regras definidas.   |
 | 📋 Listagem Avançada       | Visualizar listas detalhadas de usuários, livros e movimentações.         |
